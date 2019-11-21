@@ -9,16 +9,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vælg bane"
+        android:text="Angiv info"
+        android:textSize="40sp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vælg bane-nummer"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
+        android:id="@+id/et_lane"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Bane"
-        android:text="1" />
+        android:layout_marginBottom="10dp"
+        android:hint="Indtast bane-nummer"
+        android:inputType="number"
+        android:text="1"/>
 
     <!--    <TextView-->
     <!--        android:layout_width="wrap_content"-->
@@ -26,52 +34,57 @@
     <!--        android:text="Vælg starttid"-->
     <!--        android:textSize="20sp" />-->
 
-    <EditText
-        android:id="@+id/in_date"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:editable="false" />
-
-    <Button
-        android:id="@+id/btn_date"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/in_date"
-        android:layout_toEndOf="@+id/in_date"
-        android:layout_toRightOf="@+id/in_date"
-        android:text="SELECT DATE" />
+        android:text="Vælg dato"
+        android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/in_time"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/in_date"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:editable="false" />
-
-    <Button
-        android:id="@+id/btn_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_date"
-        android:layout_alignStart="@+id/btn_date"
-        android:layout_alignLeft="@+id/btn_date"
-        android:text="SELECT TIME" />
-
-    <ScrollView
+        android:id="@+id/et_date"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:onClick="chooseDate" />
 
-        <TextView
-            android:id="@+id/list_tw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_date"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="chooseDate"-->
+    <!--        android:text="Vælg dato" />-->
 
-    </ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vælg starttid"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:onClick="chooseTime" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_time"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="chooseTime"-->
+    <!--        android:text="Vælg tid" />-->
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="start"
+        android:text="Start" />
 
 </LinearLayout>

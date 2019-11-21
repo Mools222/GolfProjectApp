@@ -2,33 +2,25 @@ package com.example.golfprojectapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView textView;
-    private Button btnDatePicker, btnTimePicker;
-    private EditText txtDate, txtTime;
+public class MainActivity extends AppCompatActivity {
+    private EditText etLane, etDate, etTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
@@ -36,94 +28,103 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.list_tw);
-        textView.setText("Scores:\n\n");
-
-        btnDatePicker = findViewById(R.id.btn_date);
-        btnTimePicker = findViewById(R.id.btn_time);
-        txtDate = findViewById(R.id.in_date);
-        txtTime = findViewById(R.id.in_time);
-
-        btnDatePicker.setOnClickListener(this);
-        btnTimePicker.setOnClickListener(this);
-
-        firebase();
+        setupViews();
+        setupLocale();
+        setupDateTime();
     }
 
-    private void firebase() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("golf");
-
-        Date startTime = new GregorianCalendar(2019, 10, 14, 10, 0, 0).getTime();
-
-        myRef.orderByChild("time").startAt(startTime.getTime()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                System.out.println(dataSnapshot.getKey());
-
-                GolfScore golfScore = dataSnapshot.getValue(GolfScore.class);
-//                textView.append("Time: " + new Date(golfScore.getTime()) + "\nColor: " + golfScore.getColor() + "\n\n");
-                textView.append("Time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date(golfScore.getTime())) + "\nColor: " + golfScore.getColor() + "\n\n");
-
-                System.out.println("Time: " + golfScore.getTime());
-                System.out.println("Color: " + golfScore.getColor());
-                System.out.println("Previous Post ID: " + prevChildKey);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+    private void setupViews() {
+        etLane = findViewById(R.id.et_lane);
+        etDate = findViewById(R.id.et_date);
+        etTime = findViewById(R.id.et_time);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == btnDatePicker) {
-            // Get Current Date
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+    private void setupLocale() {
+        Locale locale = new Locale("da");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, null);
+    }
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                }
-            }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        }
+    private void setupDateTime() {
+        Calendar calendar = Calendar.getInstance();
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth = calendar.get(Calendar.MONTH);
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mHour = calendar.get(Calendar.HOUR_OF_DAY);
+        mMinute = calendar.get(Calendar.MINUTE);
 
-        if (v == btnTimePicker) {
-            // Get Current Time
-            final Calendar c = Calendar.getInstance();
-            mHour = c.get(Calendar.HOUR_OF_DAY);
-            mMinute = c.get(Calendar.MINUTE);
+        String patternDate = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat(patternDate, new Locale("da", "DK"));
 
-            // Launch Time Picker Dialog
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    txtTime.setText(hourOfDay + ":" + minute);
-                }
-            }, mHour, mMinute, false);
-            timePickerDialog.show();
-        }
+        String patternTime = "HH:mm";
+        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat(patternTime, new Locale("da", "DK"));
+
+        Date tempDateTime = calendar.getTime();
+
+        etDate.setText(simpleDateFormatDate.format(tempDateTime));
+        etTime.setText(simpleDateFormatTime.format(tempDateTime));
+    }
+
+    public void chooseDate(View v) {
+        setupDateTime();
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                etDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                GregorianCalendar gregorianCalendar = new GregorianCalendar(year, monthOfYear, dayOfMonth, mHour, mMinute);
+                Date chosenDate = gregorianCalendar.getTime();
+
+                String pattern = "yyyy-MM-dd";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("da", "DK"));
+                etDate.setText(simpleDateFormat.format(chosenDate));
+
+                mYear = year;
+                mMonth = monthOfYear;
+                mDay = dayOfMonth;
+            }
+        }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+
+        System.out.println("adiaf");
+    }
+
+    public void chooseTime(View v) {
+        setupDateTime();
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                etTime.setText(hourOfDay + ":" + minute);
+
+                GregorianCalendar gregorianCalendar = new GregorianCalendar(mYear, mMonth, mDay, hourOfDay, minute);
+                Date chosenTime = gregorianCalendar.getTime();
+
+                String pattern = "HH:mm";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("da", "DK"));
+                etTime.setText(simpleDateFormat.format(chosenTime));
+
+                mHour = hourOfDay;
+                mMinute = minute;
+            }
+        }, mHour, mMinute, true);
+
+        timePickerDialog.show();
+    }
+
+    public void start(View view) {
+        String lane = etLane.getText().toString();
+        GregorianCalendar chosenDateTime = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute);
+
+        if (!lane.isEmpty()) {
+            Intent intent = new Intent(this, ScoreActivity.class);
+            intent.putExtra("Lane", lane);
+            intent.putExtra("DateTime", chosenDateTime);
+            startActivity(intent);
+        } else
+            Toast.makeText(this, "Vælg venligst bane-nummer", Toast.LENGTH_SHORT).show();
     }
 }
