@@ -3,35 +3,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".ScoreActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scores"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:text="Game Out With Golf"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="40sp"
-        android:layout_marginBottom="20dp"/>
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/info_tw"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indstillinger:"
+        android:textColor="#000000"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/tw_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textColor="#000000"
+        android:textSize="25sp" />
+
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fillViewport="true">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/list_tw"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:textSize="20sp" />-->
+    <!--    </ScrollView>-->
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Info:"
-        android:textSize="20sp" />
+        android:text="Scores:"
+        android:textColor="#000000"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/tw_no_scores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingen scores fundet"
+        android:textColor="#000000"
+        android:textSize="25sp" />
+
+    <TableLayout
+        android:id="@+id/tableLayout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/list_tw"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/tableLayout_data"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
-
+            android:background="#000000" />
     </ScrollView>
 
 </LinearLayout>

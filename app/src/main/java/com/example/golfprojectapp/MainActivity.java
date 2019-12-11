@@ -22,6 +22,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private EditText etLane, etDate, etTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private String patternDate = "dd-MM-yyyy", patternTime = "HH:mm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +56,8 @@ public class MainActivity extends AppCompatActivity {
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
-        String patternDate = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat(patternDate, new Locale("da", "DK"));
 
-        String patternTime = "HH:mm";
         SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat(patternTime, new Locale("da", "DK"));
 
         Date tempDateTime = calendar.getTime();
@@ -73,13 +72,10 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                etDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                 GregorianCalendar gregorianCalendar = new GregorianCalendar(year, monthOfYear, dayOfMonth, mHour, mMinute);
                 Date chosenDate = gregorianCalendar.getTime();
 
-                String pattern = "yyyy-MM-dd";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("da", "DK"));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(patternDate, new Locale("da", "DK"));
                 etDate.setText(simpleDateFormat.format(chosenDate));
 
                 mYear = year;
@@ -88,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
-
-        System.out.println("adiaf");
     }
 
     public void chooseTime(View v) {
@@ -98,13 +92,10 @@ public class MainActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                etTime.setText(hourOfDay + ":" + minute);
-
                 GregorianCalendar gregorianCalendar = new GregorianCalendar(mYear, mMonth, mDay, hourOfDay, minute);
                 Date chosenTime = gregorianCalendar.getTime();
 
-                String pattern = "HH:mm";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("da", "DK"));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(patternTime, new Locale("da", "DK"));
                 etTime.setText(simpleDateFormat.format(chosenTime));
 
                 mHour = hourOfDay;
@@ -116,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
-        String lane = etLane.getText().toString();
+        String courseNumber = etLane.getText().toString();
         GregorianCalendar chosenDateTime = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute);
 
-        if (!lane.isEmpty()) {
+        if (!courseNumber.isEmpty()) {
             Intent intent = new Intent(this, ScoreActivity.class);
-            intent.putExtra("Lane", lane);
+            intent.putExtra("Course", courseNumber);
             intent.putExtra("DateTime", chosenDateTime);
             startActivity(intent);
         } else

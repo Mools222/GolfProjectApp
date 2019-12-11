@@ -3,21 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Angiv info"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="Game Out With Golf"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="40sp"
-        android:layout_marginBottom="20dp"/>
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vælg bane-nummer"
-        android:textSize="20sp" />
+        android:layout_marginBottom="20dp"
+        android:text="Angiv info"
+        android:textColor="#000000"
+        android:textSize="35sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indtast bane-nummer:"
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/et_lane"
@@ -26,19 +40,17 @@
         android:layout_marginBottom="10dp"
         android:hint="Indtast bane-nummer"
         android:inputType="number"
-        android:text="1"/>
-
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Vælg starttid"-->
-    <!--        android:textSize="20sp" />-->
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:text="1"
+        android:textSize="25sp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vælg dato"
-        android:textSize="20sp" />
+        android:text="Indtast dato:"
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/et_date"
@@ -48,20 +60,17 @@
         android:clickable="true"
         android:editable="false"
         android:focusable="false"
-        android:onClick="chooseDate" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btn_date"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:onClick="chooseDate"-->
-    <!--        android:text="Vælg dato" />-->
+        android:onClick="chooseDate"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:textSize="25sp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vælg starttid"
-        android:textSize="20sp" />
+        android:text="Indtast starttid:"
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/et_time"
@@ -71,20 +80,21 @@
         android:clickable="true"
         android:editable="false"
         android:focusable="false"
-        android:onClick="chooseTime" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btn_time"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:onClick="chooseTime"-->
-    <!--        android:text="Vælg tid" />-->
+        android:onClick="chooseTime"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
         android:onClick="start"
-        android:text="Start" />
+        android:padding="20dp"
+        android:text="Start"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
 
 </LinearLayout>
